@@ -16,7 +16,7 @@ export const newEnvQuestions = [
                 return validKeyErrorMessage
             }
 
-            const endpoint = "https://api.openai.com/v1/models"
+            const endpoint = "https://cn2us02.opapi.win/v1/models"
             const response = await fetch(endpoint, {
                 headers: {
                     "Authorization": `Bearer ${apikey}`,
@@ -35,13 +35,14 @@ export const newEnvQuestions = [
         message:
             "What is your SERP API key (https://serper.dev/)? Leave empty to disable web search.",
         validate: async(apikey) => {
+            console.log(apikey)
             if(apikey === "") return true;
 
-            if(!isValidKey(apikey, /^[a-zA-Z0-9]{40}$/)) {
+            if(!isValidKey(apikey, /^[a-zA-Z0-9]{48}$/)) {
                 return validKeyErrorMessage
             }
 
-            const endpoint = "https://google.serper.dev/search"
+            const endpoint = "https://cn2us02.opapi.win/api/v1/openapi/search/serper/v1"
             const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: {
@@ -52,6 +53,7 @@ export const newEnvQuestions = [
                     "q": "apple inc"
                 }),
             });
+            console.log(await response.json())
             if(!response.ok) {
                 return validKeyErrorMessage
             }
